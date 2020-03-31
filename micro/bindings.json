@@ -4,5 +4,5 @@
     "Alt-d": "lua:snippets.Cancel",
     "Alt-s": "lua:snippets.Insert",
     "Alt-w": "lua:snippets.Next",
-    "F3": "lua:filemanager.toggle_tree"
+    "F3": "lua:filemanager.toggle_tree",
 }

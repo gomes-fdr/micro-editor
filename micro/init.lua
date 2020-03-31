@@ -1,29 +1,18 @@
--- Save this file to ~/.config/micro/init.lua
--- Strongly based on Bruno Rocha - http://brunorocha.org/
-
-VERSION = "0.0.3"
-
-local micro = import("micro")
 local config = import("micro/config")
 local shell = import("micro/shell")
-local buffer = import("micro/buffer")
 
 function init()
+    -- true means overwrite any existing binding to F5
     -- this will modify the bindings.json file
-    -- true means overwrite any existing binding
-    config.TryBindKey("Alt-o", "lua:initlua.output", true)
+    config.TryBindKey("F5", "lua:initlua.pyrun", true)
 end
 
-function output(bp)
-
-    bp:Save()
+function pyrun(bp)
     local buf = bp.Buf
-
-    _command = {}
-    _command["go"] = "go run " .. buf.Path
-    _command["python"] = "python " .. buf.Path
-
-    run_action(bp.Buf, _command, "Output", true) -- false=no bottom panel
-
-end
-
+    
+    if buf:FileType() == "python" then
+        -- the true means run in the foreground
+        -- the false means send output to stdout (instead of returning it)
+        shell.RunInteractiveShell("python " .. buf.Path, true, false)
+    end
+end-- Save this file to ~/.config/micro/init.lua
